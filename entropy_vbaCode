@@ -1,0 +1,31 @@
+Function plogp(p As Double) As Double
+   plogp = 0
+   If p <> 0 Then
+        plogp = -p * Log(p) / Log(2)
+   End If
+End Function
+
+
+
+Function Entropy(valOfInterest As Integer, values As Range, inClass As Range) As Double
+    Dim countIn As Double, countTotal As Double
+    Dim i As Integer
+    countIn = 0
+    countTotal = 0
+    For i = 1 To values.Rows.Count
+        If values.Rows(i).Value = valOfInterest Then
+            countTotal = countTotal + 1
+            If inClass.Rows(i).Value Then
+                countIn = countIn + 1
+            End If
+        End If
+    Next i
+    
+    If countTotal = 0 Then
+        Entropy = 0
+        Exit Function
+    End If
+    
+    Entropy = plogp(countIn / countTotal) + plogp((countTotal - countIn) / countTotal)
+End Function
+
